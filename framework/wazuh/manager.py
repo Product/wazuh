@@ -219,13 +219,16 @@ def upload_file(tmp_file, path, content_type, overwrite=False):
 
 def upload_xml(xml_file, path):
     """
-    Updates XML files (rules and decoders)
+    Upload XML files (rules and decoders)
     :param xml_file: content of the XML file
     :param path: Destination of the new XML file
     :return: Confirmation message
     """
     # path of temporary files for parsing xml input
     tmp_file_path = '{}/tmp/api_tmp_file_{}_{}.xml'.format(common.ossec_path, time.time(), random.randint(0, 1000))
+
+    # Replace '--' for '-' to validate the XML format properly
+    xml_file = xml_file.replace('--', '-')
 
     # create temporary file for parsing xml input
     try:
@@ -336,6 +339,7 @@ def get_file(path, validation=False):
 
     return output
 
+
 def validate_xml(path):
     """
     Validates a XML file
@@ -352,6 +356,7 @@ def validate_xml(path):
         return False
 
     return True
+
 
 def validate_cdb_list(path):
     """
